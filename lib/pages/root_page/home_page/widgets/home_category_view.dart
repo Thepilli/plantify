@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plantify/app/app_colors.dart';
 import 'package:plantify/data/models/plant.dart';
 import 'package:plantify/pages/detail_page/detail_page.dart';
-import 'package:plantify/providers/favorite_button_provider.dart';
+import 'package:plantify/providers/favorite_plant_provider.dart';
 import 'package:plantify/providers/home_page_controller.dart';
 import 'package:plantify/shared/extensions/build_context.dart';
 
@@ -22,6 +22,7 @@ class CategoryView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    List<Plant> favoritePlants = ref.watch(favoritePlantProvider);
     int categoryIndex = ref.watch(categoryIndexProvider);
     return Column(
       children: [
@@ -60,7 +61,6 @@ class CategoryView extends ConsumerWidget {
             itemCount: plants.length,
             itemBuilder: (BuildContext context, int index) {
               Plant plant = plants[index];
-              bool plantIsFavorite = ref.watch(favoriteButtonProvider);
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
@@ -78,7 +78,7 @@ class CategoryView extends ConsumerWidget {
                       alignment: Alignment.center,
                       children: [
                         Hero(
-                          tag: plant.plantId,
+                          tag: plant.imageUrl,
                           child: Image.asset(
                             plant.imageUrl,
                             height: context.sizeHeight * .18,
@@ -118,12 +118,15 @@ class CategoryView extends ConsumerWidget {
                           top: 10,
                           right: 10,
                           child: Container(
-                            key: const ValueKey('favorite_button'),
                             decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(99)),
                             child: IconButton(
-                                onPressed: () {
-                                  ref.read(favoriteButtonProvider.notifier).setFavoriteButton(plant, plantIsFavorite);
-                                },
+                                onPressed: plant.isFavorite
+                                    ? () {
+                                        ref.read(favoritePlantProvider.notifier).removeFromFavorite(plant.plantId);
+                                      }
+                                    : () {
+                                        ref.read(favoritePlantProvider.notifier).addToFavorite(plants, plant.plantId);
+                                      },
                                 icon: Icon(
                                   plant.isFavorite ? Icons.favorite : Icons.favorite_border,
                                   color: context.primary,

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plantify/app/app_colors.dart';
 import 'package:plantify/app/app_constants.dart';
+import 'package:plantify/pages/root_page/cart_page/cart_page.dart';
+import 'package:plantify/pages/root_page/favorite_page/favorite_page.dart';
 import 'package:plantify/pages/root_page/home_page/home_page.dart';
 import 'package:plantify/pages/root_page/profile_page/profile_page.dart';
 import 'package:plantify/pages/root_page/root_page_controller.dart';
@@ -28,10 +30,8 @@ class RootPage extends ConsumerWidget {
     List<Widget> _rootPages() {
       return [
         const HomePage(),
-        // FavoritePage(addedToFavoritePlants: myFavorites),
-        // CartPage(
-        //   addedToCartPlants: myCart,
-        // ),
+        const FavoritePage(),
+        const CartPage(),
         const ProfilePage(),
       ];
     }

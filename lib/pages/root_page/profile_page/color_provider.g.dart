@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'cart_button_provider.dart';
+part of 'color_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$cartButtonHash() => r'99433f438e93c9a28e941785b12052af51c611ed';
+String _$colorChangeHash() => r'54459404a21470bd52ee2dbd59bae6619362a9c2';
 
-/// See also [CartButton].
-@ProviderFor(CartButton)
-final cartButtonProvider =
-    AutoDisposeNotifierProvider<CartButton, bool>.internal(
-  CartButton.new,
-  name: r'cartButtonProvider',
+/// See also [ColorChange].
+@ProviderFor(ColorChange)
+final colorChangeProvider =
+    AutoDisposeNotifierProvider<ColorChange, Color>.internal(
+  ColorChange.new,
+  name: r'colorChangeProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$cartButtonHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$colorChangeHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$CartButton = AutoDisposeNotifier<bool>;
+typedef _$ColorChange = AutoDisposeNotifier<Color>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

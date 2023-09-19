@@ -6,12 +6,13 @@ part of 'favorite_plant_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$favoritePlantHash() => r'd8ebd6c514e9e575d8c37170a26f9a137e861a09';
+String _$favoritePlantHash() => r'51eff4affd02cea3556aa592b5a96f3d824ad3a6';
 
-/// See also [favoritePlant].
-@ProviderFor(favoritePlant)
-final favoritePlantProvider = AutoDisposeProvider<List<Plant>>.internal(
-  favoritePlant,
+/// See also [FavoritePlant].
+@ProviderFor(FavoritePlant)
+final favoritePlantProvider =
+    AutoDisposeNotifierProvider<FavoritePlant, List<Plant>>.internal(
+  FavoritePlant.new,
   name: r'favoritePlantProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
@@ -20,6 +21,6 @@ final favoritePlantProvider = AutoDisposeProvider<List<Plant>>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef FavoritePlantRef = AutoDisposeProviderRef<List<Plant>>;
+typedef _$FavoritePlant = AutoDisposeNotifier<List<Plant>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:plantify/data/models/plant.dart';
+import 'package:plantify/data/repository/plant_repository.dart';
 import 'package:plantify/pages/detail_page/widgets/detail_footer.dart';
-import 'package:plantify/providers/cart_button_provider.dart';
-import 'package:plantify/providers/favorite_button_provider.dart';
+import 'package:plantify/providers/favorite_plant_provider.dart';
 import 'package:plantify/shared/extensions/build_context.dart';
 import 'package:plantify/shared/widgets/circular_button.dart';
 import 'package:plantify/shared/widgets/info_label.dart';
@@ -21,10 +21,8 @@ class DetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool isSelected = ref.watch(cartButtonProvider);
-    bool isFavorite = ref.watch(favoriteButtonProvider);
-    print('fav $isFavorite');
-    print('sel $isSelected');
+    List<Plant> plants = ref.watch(plantsRepositoryProvider).getPlantsList();
+    List<Plant> favoritePlants = ref.watch(favoritePlantProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -32,7 +30,7 @@ class DetailPage extends ConsumerWidget {
           alignment: Alignment.bottomCenter,
           children: [
             //footer container
-            DetailFooter(plant: plant, isSelected: isSelected),
+            DetailFooter(plant: plant),
             //top buttons
             Positioned(
               top: 10,
@@ -48,11 +46,16 @@ class DetailPage extends ConsumerWidget {
               top: 10,
               right: 10,
               child: CircularButton(
-                key: ValueKey('favorite_button'),
-                onTap: () {
-                  ref.read(favoriteButtonProvider.notifier).setFavoriteButton(plant, isFavorite);
-                },
-                icon: isFavorite ? Icons.favorite : Icons.favorite_border,
+                onTap: plant.isFavorite
+                    ? () {
+                        ref.read(favoritePlantProvider.notifier).removeFromFavorite(plant.plantId);
+                        print('removeFromFavorite');
+                      }
+                    : () {
+                        ref.read(favoritePlantProvider.notifier).addToFavorite(plants, plant.plantId);
+                        print('addToFavorite');
+                      },
+                icon: plant.isFavorite ? Icons.favorite : Icons.favorite_border,
                 buttoncolor: context.primary.withOpacity(.3),
               ),
             ),
@@ -66,7 +69,7 @@ class DetailPage extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Hero(
-                      tag: plant.plantId,
+                      tag: plant.imageUrl,
                       child: Image.asset(
                         plant.imageUrl,
                         height: context.sizeHeight * .45,

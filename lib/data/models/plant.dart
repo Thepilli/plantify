@@ -7,7 +7,7 @@ typedef PlantID = String;
 
 class Plant extends Equatable {
   final String plantId;
-  final int price;
+  final double price;
   final String size;
   final double rating;
   final int humidity;
@@ -49,7 +49,7 @@ class Plant extends Equatable {
 
   Plant copyWith({
     String? plantId,
-    int? price,
+    double? price,
     String? size,
     double? rating,
     int? humidity,
@@ -97,7 +97,7 @@ class Plant extends Equatable {
   factory Plant.fromMap(Map<String, dynamic> map) {
     return Plant(
       plantId: map['plantId'] as String,
-      price: map['price'] as int,
+      price: map['price'] as double,
       size: map['size'] as String,
       rating: map['rating'] as double,
       humidity: map['humidity'] as int,
